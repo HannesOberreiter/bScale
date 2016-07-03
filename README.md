@@ -1,6 +1,6 @@
-# bScale
+# bScale for app.btree.at
 
-Small Arduino Project for a DIY beehive scale, with SIM900 commands to send to webservice.
+Small Arduino Project for a DIY beehive scale, with SIM900 commands to send to webservice. This project is made to work with the webapp **app.btree.at**, a online database for beekeeper but you can use the webservice you want. 
 
 # Hardware
 
