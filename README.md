@@ -20,4 +20,10 @@ atTiny85 is a simple counter, it will send each 30 minutes a pulse to the N-Mosf
 
 The made for app.btree.at a web beekeeping software. There the data will be shown in tables and statistics. But you can change the webservice to any you want.
 
+# Special thanks to
+Andi_H from bienenforum.com for the idea and lots of code (calibrate)
+
+# License 
+GNU GPLv3 
+
 
