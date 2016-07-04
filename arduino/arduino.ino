@@ -13,7 +13,7 @@ const char API[] PROGMEM = "/app/api/ext/scale.php?";
 //const char API[] PROGMEM = "/u2e1hdu2?";
 //change this constants as needed
 const char APN[] PROGMEM = "webaut"; //APN from your provider, given is HOT (Hofer)
-const char KEY[] PROGMEM= "test_api"; //API Key from your profile page www.btree.at/app
+const char KEY[] PROGMEM= "API-KEY"; //API Key from your profile page www.btree.at/app
 const char ACTION[] PROGMEM = "CREATE"; //Use CREATE_DEMO if you just want to check the connection
 const char TIMEZONE[] PROGMEM = "Europe/Vienna"; //php timezoneformat, used to save with the correct current date/time
 
