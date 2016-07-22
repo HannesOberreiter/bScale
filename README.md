@@ -22,7 +22,9 @@ The made for app.btree.at a web beekeeping software. There the data will be show
 
 # Special thanks to
 Andi_H from bienenforum.com for the idea and lots of code pieces
+
 bodge awesome HX711.h library https://github.com/bogde/HX711
+
 Nathan Seidle SparkFun Electronics for calibrate code
 
 # License
