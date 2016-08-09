@@ -1,6 +1,6 @@
 # bScale for app.btree.at
 
-Small Arduino Project for a DIY beehive scale, with SIM900 commands to send to webservice. This project is made to work with the webapp **[app.btree.at](https://www.btree.at/app)**, a online database for beekeeper but you can use the webservice you want.
+Small Arduino Project for a DIY beehive scale, with SIM900 commands to send to webservice. This project is made to work with the webapp **[app.btree.at](https://www.btree.at/app)**, a online database for beekeeper but you can use any webservice you want.
 
 # Hardware
 
@@ -9,7 +9,7 @@ Small Arduino Project for a DIY beehive scale, with SIM900 commands to send to w
 * atTiny85 + Base ([Ebay ca. € 6,00 ](http://www.ebay.at/itm/3x-Atmel-ATTiny85-20PU-und-3x-DIL-Sockel-/251833156761?hash=item3aa26d0499:g:bYQAAOSwMpZUoV~n))
 * N-Mosfet ([Ebay ca. < € 1,00](http://www.ebay.at/itm/5-BUZ11-Fairchild-MOSFET-Transistor-50V-30A-75W-0-04R-854773-/311597076091?hash=item488ca20e7b:g:O3AAAOSwLVZVyb-J))
 * HX711 Sensor ([Ebay China < € 1,00](http://www.ebay.at/itm/5PCS-Weighing-Sensor-AD-Module-Dual-channel-24-bit-A-D-Conversion-HX711-Shieding-/272298400315?hash=item3f663fda3b:g:zKkAAOSwEjFXfP2J))
-* > 200kg platform load cell ([AliExpress ca. € 17,00](http://de.aliexpress.com/item/1PCS-X-100KG-150KG-electronic-platform-scale-load-cell-pressure-balanced-cantilever-load-weight-sensor/1743007676.html))
+* < 200kg platform load cell ([AliExpress ca. € 17,00](http://de.aliexpress.com/item/1PCS-X-100KG-150KG-electronic-platform-scale-load-cell-pressure-balanced-cantilever-load-weight-sensor/1743007676.html))
 
 and battery case, batteries, resistors, jumper wire, scale plattform, Total cost is under € 100,00.
 
