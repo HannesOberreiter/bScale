@@ -25,7 +25,7 @@ Andi_H from bienenforum.com for the idea and lots of code pieces
 
 bodge awesome HX711.h library https://github.com/bogde/HX711
 
-Nathan Seidle SparkFun Electronics for calibrate code
+Nathan Seidle SparkFun Electronics for calibrate code https://github.com/sparkfun/HX711-Load-Cell-Amplifier
 
 # License
 GNU GPLv3
