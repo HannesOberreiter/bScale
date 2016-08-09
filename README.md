@@ -13,9 +13,8 @@ Small Arduino Project for a DIY beehive scale, with SIM900 commands to send to w
 
 and battery case, batteries, resistors, jumper wire, scale plattform, Total cost is under € 100,00.
 
-Dirty Build: 
-![alt text][logo]
-[logo]: https://github.com/HannesOberreiter/bScale/tree/master/img/Sketch_Steckplatine.png "Sketch"
+# Dirty Build: 
+![Fritzing](https://github.com/HannesOberreiter/bScale/blob/master/img/Sketch_Steckplatine.png?raw=true "Sketch Fritzing")
 
 
 # How does / should it work?
