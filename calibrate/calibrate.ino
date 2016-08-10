@@ -17,9 +17,9 @@
 
 float   SCALE =     false;  //Set to 'false' on your first try, then enter your calibration factor
 long    OFFSET =    false; //Set to 'false' if you dont know your offset / zero factor.
-//My values with 200kg sensor
-//float   SCALE =     -19414.f;  //Set to 'false' on your first try, then enter your calibration factor
-//long    OFFSET =    -209772; //Set to 'false' if you dont know your offset / zero factor.
+//My values with 200kg sensor on 3.3V
+//float   SCALE =     -19689.35;  //Set to 'false' on your first try, then enter your calibration factor
+//long    OFFSET =    -205389; //Set to 'false' if you dont know your offset / zero factor.
 
 HX711 scale(DIGITALOUT, CLOCK);
 
