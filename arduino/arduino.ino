@@ -10,7 +10,7 @@ const char URL[] PROGMEM = "www.btree.at";
 const char API[] PROGMEM = "/app/api/ext/scale.php?";
 //Resquestb.in Testing Request
 //const char URL[] PROGMEM = "requestb.in";
-//const char API[] PROGMEM = "/1474jhh1?";
+//const char API[] PROGMEM = "YOU_REQUEST_BIN_URL";
 //change this constants as needed
 const char APN[] PROGMEM = "webaut"; //APN from your provider, given is HOT (Hofer)
 const char KEY[] PROGMEM= "YOU_API_KEY"; //API Key from your profile page www.btree.at/app
@@ -41,6 +41,7 @@ char rain[6] = "0.00";
 char hum[7] = "0.00";
 
 //Code Variables
+float helper;
 char conv[150];
 char postdata[150];
 char response[150];
@@ -51,17 +52,15 @@ char response[150];
 HX711 scale(DIGITALOUT, CLOCK);
 
 //ENTER YOUR CALIBRATED DATA HERE
-float SCALE = -19414.f;
-long offset = -209772;
+//as example is my first try given, with 200kg load cell and 3.3V calibrated
+float SCALE = -19689.35;
+long offset = -205389;
 
 
 void setup()
 {
 mySerial.begin(9600);
 Serial.begin(9600);
-//HX711 definitions
-scale.set_scale(SCALE);
-scale.set_offset(offset);
 
 delay(1000);
 Power_UP();
@@ -213,7 +212,12 @@ void Request()
   //------------------------------------------------
   //-------------------Sensor Readings--------------
   //------------------------------------------------
-  dtostrf(scale.get_units(10), 0, 2, weight);
+  //HX711 definitions
+  scale.set_scale();
+  scale.set_offset(offset);
+  scale.set_scale(SCALE);
+  //Get weight and convert to char
+  dtostrf(scale.get_units(5), 0, 2, weight);
   Serial.println(F("Weight:\t"));
   Serial.println(weight);
   delay (1000);
@@ -291,6 +295,11 @@ void done(){
     delay(2000);
     digitalWrite(9,LOW);
     delay(3000);
+
+    //Shutdown Scale
+    scale.power_down();
+    
+    
     //Set Arduino Sleep mode and send to sleep
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
     sleep_enable();
