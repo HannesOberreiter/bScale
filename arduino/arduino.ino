@@ -10,7 +10,7 @@ const char URL[] PROGMEM = "www.btree.at";
 const char API[] PROGMEM = "/app/api/ext/scale.php?";
 //Resquestb.in Testing Request
 //const char URL[] PROGMEM = "requestb.in";
-//const char API[] PROGMEM = "/u2e1hdu2?";
+//const char API[] PROGMEM = "/1474jhh1?";
 //change this constants as needed
 const char APN[] PROGMEM = "webaut"; //APN from your provider, given is HOT (Hofer)
 const char KEY[] PROGMEM= "YOU_API_KEY"; //API Key from your profile page www.btree.at/app
@@ -33,12 +33,12 @@ const char * const MARRAY[7] PROGMEM =
 };
 
 //Sensor Data
-static char weight[6];
+char weight[7];
 //Demo Data
-char temp1[6]= "12.00";
-char temp2[6] = "12.00";
-char rain[6] = "13.4";
-char hum[7] = "80.00";
+char temp1[6]= "0.00";
+char temp2[6] = "0.00";
+char rain[6] = "0.00";
+char hum[7] = "0.00";
 
 //Code Variables
 char conv[150];
@@ -49,8 +49,10 @@ char response[150];
 #define DIGITALOUT  5     //HX711 DT
 #define CLOCK       6     //HX711 CKL
 HX711 scale(DIGITALOUT, CLOCK);
-float SCALE = -19548.28;
-long offset = -210523;
+
+//ENTER YOUR CALIBRATED DATA HERE
+float SCALE = -19414.f;
+long offset = -209772;
 
 
 void setup()
@@ -109,7 +111,7 @@ void Power_UP()
   delay(3000);
   //Print GSM Reciving Strenth
   Serial.println(F("Get access strength .."));
-  sendATcommand2("AT+CSQ", "OK", "NOTHING", 100);
+  sendATcommand2("AT+CSQ", "OK", "NOTHING", 1000);
 }
 
 
@@ -181,6 +183,7 @@ void Request()
     Request();
   }
 
+
   /*if(sendATcommand2("AT+HTTPTERM", "OK", "ERROR", 500) != 1) {
     Serial.println(F("#E nothing to terminate"));
     //return;
@@ -191,7 +194,7 @@ void Request()
   if(sendATcommand2("AT+HTTPINIT", "OK", "ERROR", 500) != 1) {
     Serial.println(F("#E HTTP!"));
     delay(2000);
-    Request();
+    //Request();
   }
 
 
@@ -210,7 +213,7 @@ void Request()
   //------------------------------------------------
   //-------------------Sensor Readings--------------
   //------------------------------------------------
-  dtostrf(scale.get_units(10), 5, 2, weight);
+  dtostrf(scale.get_units(10), 0, 2, weight);
   Serial.println(F("Weight:\t"));
   Serial.println(weight);
   delay (1000);
