@@ -15,9 +15,11 @@
 #define DIGITALOUT  5     //HX711 DT
 #define CLOCK       6     //HX711 CKL
 
-
 float   SCALE =     false;  //Set to 'false' on your first try, then enter your calibration factor
 long    OFFSET =    false; //Set to 'false' if you dont know your offset / zero factor.
+//My values with 200kg sensor
+//float   SCALE =     -19414.f;  //Set to 'false' on your first try, then enter your calibration factor
+//long    OFFSET =    -209772; //Set to 'false' if you dont know your offset / zero factor.
 
 HX711 scale(DIGITALOUT, CLOCK);
 
