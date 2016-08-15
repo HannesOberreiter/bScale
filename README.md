@@ -30,6 +30,7 @@ The made for [app.btree.at](https://www.btree.at/app) a web beekeeping software.
 
 **German:**
 * [b.tree Open Source Bienenstockwaage kalibrieren ](https://www.youtube.com/watch?v=fo4yXhe6Qlo)
+* [b.tree Open Source Bienenstockwaage atTiny85 programmieren ](https://youtu.be/5xHgviWt0F4)
 
 # Special thanks to
 Andi_H from bienenforum.com for the idea and lots of code pieces
