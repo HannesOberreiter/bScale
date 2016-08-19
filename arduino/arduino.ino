@@ -13,7 +13,7 @@ const char API[] PROGMEM = "/app/api/ext/scale.php?";
 //const char API[] PROGMEM = "YOU_REQUEST_BIN_URL";
 //change this constants as needed
 const char APN[] PROGMEM = "webaut"; //APN from your provider, given is HOT (Hofer)
-const char KEY[] PROGMEM= "YOU_API_KEY"; //API Key from your profile page www.btree.at/app
+const char KEY[] PROGMEM= "you_api_key"; //API Key from your profile page www.btree.at/app
 const char ACTION[] PROGMEM = "CREATE"; //Use CREATE_DEMO if you just want to check the connection
 const char TIMEZONE[] PROGMEM = "Europe/Vienna"; //php timezoneformat, used to save with the correct current date/time
 
@@ -54,7 +54,7 @@ HX711 scale(DIGITALOUT, CLOCK);
 //ENTER YOUR CALIBRATED DATA HERE
 //as example is my first try given, with 200kg load cell and 3.3V calibrated
 float SCALE = -19689.35;
-long offset = -205389;
+long offset = -145680;
 
 
 void setup()
@@ -212,10 +212,13 @@ void Request()
   //------------------------------------------------
   //-------------------Sensor Readings--------------
   //------------------------------------------------
+  delay (5000);
   //HX711 definitions
   scale.set_scale();
   scale.set_offset(offset);
   scale.set_scale(SCALE);
+  delay (5000);
+
   //Get weight and convert to char
   dtostrf(scale.get_units(5), 0, 2, weight);
   Serial.println(F("Weight:\t"));
