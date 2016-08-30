@@ -10,9 +10,12 @@
 #endif
 
 int const pinGate = 0; //PIN for MOSFET GATE
-long const waitTime = 45000; //How long the mosfet is open
+int const readGate = 1; //PIN for MOSFET GATE
+
+long const waitTime = 60000; //How long the mosfet is open
 volatile boolean f_wdt=1; //Flag to open MOSFET 1 open 0 closed
 volatile int count; //count the circles
+volatile int whileCounter; //count the circles inside loop
 int const circles = 900; // Amount of circle till gate will be opened, Watchdog = 8 sec per circle
 
 void setup(){
@@ -44,9 +47,11 @@ void loop(){
     count++;
     if(circles <= count){
       pinMode(pinGate,OUTPUT); //Set Gate as Output
+      pinMode(readGate,INPUT_PULLUP); //Set Read Gate to Pullup will LOW when closed and HIGH when open
       count = 0;
       openGate();
       pinMode(pinGate,INPUT); // set all used port to intput to save power
+      pinMode(readGate,INPUT);
     }
     system_sleep();
   }
@@ -95,6 +100,10 @@ ISR(WDT_vect) {
 void openGate()
 {
   digitalWrite(pinGate, HIGH);
-  delay(waitTime);
+  whileCounter = 0;
+  while(digitalRead(readGate) == LOW || whileCounter >= waitTime ) { 
+    delay(1);
+    whileCounter++;  
+  }
   digitalWrite(pinGate, LOW);
 }
