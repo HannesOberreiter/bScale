@@ -43,7 +43,7 @@ My father for help with the electronics.
 
 # Tests
 
-* First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and only for 45 seconds. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok.
+* 2016-08-30 First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and only for 45 seconds. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok, Hannes.
 
 # License
 GNU GPLv3
