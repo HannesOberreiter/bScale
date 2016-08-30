@@ -10,10 +10,10 @@
 #endif
 
 int const pinGate = 0; //PIN for MOSFET GATE
-long const waitTime = 90000; //How long the mosfet is open
+long const waitTime = 45000; //How long the mosfet is open
 volatile boolean f_wdt=1; //Flag to open MOSFET 1 open 0 closed
 volatile int count; //count the circles
-int const circles = 225; // Amount of circle till gate will be opened, Watchdog = 8 sec per circle
+int const circles = 900; // Amount of circle till gate will be opened, Watchdog = 8 sec per circle
 
 void setup(){
   pinMode(pinGate,INPUT); // set all used port to intput to save power
