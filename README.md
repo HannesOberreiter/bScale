@@ -20,7 +20,7 @@ and battery case, batteries, resistors, jumper wire, scale plattform, Total cost
 # How does / should it work?
 
 UNO will collect data from sensors and send them to the shield. Uno send SIM900 commands.
-atTiny85 is a simple counter, it will send each 30 minutes a pulse to the N-Mosfet gate. The Mosfet will open circuit to Uno and activate it.
+atTiny85 is a simple counter, it will send each 120 minutes a pulse to the N-Mosfet gate. The Mosfet will open circuit to Uno and activate it.
 
 # The webservice
 
@@ -40,6 +40,10 @@ bodge awesome HX711.h library https://github.com/bogde/HX711
 Nathan Seidle SparkFun Electronics for calibrate code https://github.com/sparkfun/HX711-Load-Cell-Amplifier
 
 My father for help with the electronics.
+
+# Tests
+
+* First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and only for 45 seconds. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok.
 
 # License
 GNU GPLv3
