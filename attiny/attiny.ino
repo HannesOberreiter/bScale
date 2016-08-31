@@ -13,9 +13,13 @@ int const pinGate = 0; //PIN for MOSFET GATE
 int const readGate = 1; //PIN for MOSFET GATE
 
 long const waitTime = 90000; //How long the mosfet is open
+
 volatile boolean f_wdt=1; //Flag to open MOSFET 1 open 0 closed
+volatile boolean f_done=0; //Flag when open state is done
+volatile boolean f_setup=0; //Flag when open pins and set starting time
+
+unsigned long startMillis = 0; //holds our starting time
 volatile int count; //count the circles
-volatile int whileCounter; //count the circles inside loop
 int const circles = 900; // Amount of circle till gate will be opened, Watchdog = 8 sec per circle
 
 void setup(){
@@ -45,17 +49,42 @@ void setup(){
 
 void loop(){
   if (f_wdt==1) {  // wait for timed out watchdog / flag is set when a watchdog timeout occurs
-    f_wdt=0;       // reset flag
-    count++;
     if(circles <= count){
-      pinMode(pinGate,OUTPUT); //Set Gate as Output
-      pinMode(readGate,INPUT_PULLUP); //Set Read Gate to Pullup will LOW when closed and HIGH when open
-      count = 0;
-      openGate();
-      pinMode(pinGate,INPUT); // set all used port to intput to save power
-      pinMode(readGate,INPUT);
+      //Count reached, lets start our MOSFET
+      
+      //Start with Setup our PINS and the millis to compare
+      if(f_start==0){
+        pinMode(pinGate,OUTPUT); //Set Gate as Output
+        pinMode(readGate,INPUT_PULLUP); //Set Read Gate to Pullup will LOW when closed and HIGH when open
+        unsigned long startMillis = millis(); //Snapshot of current time
+        digitalWrite(pinGate, HIGH); //Output High to MOSFET to open the gate
+        f_start = 1; //set setup flag as finished
+      }
+
+      //Setup is finished, lets see if we should stop open the MOSFET
+      if(f_start==1){
+        if(digitalRead(readGate) == LOW) f_done = 1; //We got a signal, lets start new sleep circle
+        unsigned long currentMillis = millis(); //Our current Millis
+        if ((unsigned long)(currentMillis - startMillis) >= waitTime) f_done = 1;  //Timeout time is reached, lets start new sleep circle
+      }
+      
+      if(f_done==1){
+        digitalWrite(pinGate, LOW);
+        // set all used port to intput to save power
+        pinMode(pinGate,INPUT); 
+        pinMode(readGate,INPUT);
+        f_start = 0;    // reset setup flag
+        f_done = 0;     // reset open circle flag
+        count = 0;      // reset sleep cycle count
+        f_wdt=0;       // reset watchdog flag
+        system_sleep(); // back to sleep little tiny
+      }
+    } else {
+      //Count has not reached Circles yet, just go back to sleep and count up
+      count++;
+      f_wdt=0;       // reset watchdog flag
+      system_sleep(); // back to sleep little tiny
     }
-    system_sleep();
   }
 }
 
@@ -96,16 +125,4 @@ void setup_watchdog(int ii) {
 // Watchdog Interrupt Service / is executed when  watchdog timed out
 ISR(WDT_vect) {
   f_wdt=1;  // set global flag
-}
-
-// Simple PIN 0 push to open mosfet
-void openGate()
-{
-  digitalWrite(pinGate, HIGH);
-  whileCounter = 0;
-  while(digitalRead(readGate) == HIGH && whileCounter <= waitTime ) { 
-    delay(1);
-    whileCounter++;  
-  }
-  digitalWrite(pinGate, LOW);
 }
