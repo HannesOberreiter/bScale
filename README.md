@@ -22,6 +22,8 @@ and battery case, batteries, resistors, jumper wire, scale plattform, Total cost
 UNO will collect data from sensors and send them to the shield. Uno send SIM900 commands.
 atTiny85 is a simple counter, it will send each 120 minutes a pulse to the N-Mosfet gate. The Mosfet will open circuit to Uno and activate it.
 
+The UNO will tell the atTiny85 when the sending was completed. If the sending is not completed within 60 seconds, the atTiny will shutdown the UNO even it is not completed. (No connection to internet etc.)
+
 # The webservice
 
 The made for [app.btree.at](https://www.btree.at/app) a web beekeeping software. There the data will be shown in tables and statistics. But you can change the webservice to any you want.
@@ -43,7 +45,7 @@ My father for help with the electronics.
 
 # Tests
 
-* 2016-08-30 First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and only for 45 seconds. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok, Hannes.
+* 2016-08-30 First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and the UNO will tell the atTiny when it is finsihed. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok, Hannes.
 
 # License
 GNU GPLv3
