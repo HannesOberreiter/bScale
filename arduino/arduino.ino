@@ -13,7 +13,7 @@ const char API[] PROGMEM = "/app/api/ext/scale.php?";
 //const char API[] PROGMEM = "YOU_REQUEST_BIN_URL";
 //change this constants as needed
 const char APN[] PROGMEM = "webaut"; //APN from your provider, given is HOT (Hofer)
-const char KEY[] PROGMEM= "you_api_key"; //API Key from your profile page www.btree.at/app
+const char KEY[] PROGMEM= "ENTER_HERE_YOUR_API_KEY"; //API Key from your profile page www.btree.at/app
 const char ACTION[] PROGMEM = "CREATE"; //Use CREATE_DEMO if you just want to check the connection
 const char TIMEZONE[] PROGMEM = "Europe/Vienna"; //php timezoneformat, used to save with the correct current date/time
 
@@ -46,6 +46,9 @@ char conv[150];
 char postdata[150];
 char response[150];
 
+//atTiny Message PIN
+#define FINISHED 2 //Tell the atTiny we are finished
+
 //Scale
 #define DIGITALOUT  5     //HX711 DT
 #define CLOCK       6     //HX711 CKL
@@ -56,7 +59,6 @@ HX711 scale(DIGITALOUT, CLOCK);
 float SCALE = -19689.35;
 long offset = -145680;
 
-
 void setup()
 {
 mySerial.begin(9600);
@@ -64,7 +66,7 @@ Serial.begin(9600);
 
 delay(1000);
 Power_UP();
-delay(3000);
+delay(1000);
 /*if(sendATcommand2("AT+CPIN?", "+CPIN: READY", "NOTHING", 100) == 0) {
     Serial.println(F("Error SIM locked, please unlock SIM"));
   } else {
@@ -76,7 +78,7 @@ delay(500);
 Serial.println(F("Connecting .... "));
 while( sendATcommand2("AT+CREG?", "+CREG: 0,1", "+CREG: 0,5", 1000)== 0 );
 Serial.println(F("Setup finished!"));
-delay(5000);
+delay(200);
 Request();
 }
 
@@ -107,10 +109,10 @@ void Power_UP()
     }
   }
   Serial.println(F("GSM ready!"));
-  delay(3000);
+  delay(200);
   //Print GSM Reciving Strenth
   Serial.println(F("Get access strength .."));
-  sendATcommand2("AT+CSQ", "OK", "NOTHING", 1000);
+  sendATcommand2("AT+CSQ", "OK", "NOTHING", 500);
 }
 
 
@@ -176,7 +178,7 @@ void Request()
     //return;
   }
 
-  if(sendATcommand2("AT+SAPBR=2,1", "OK", "ERROR", 500) != 1) {
+  if(sendATcommand2("AT+SAPBR=2,1", "OK", "ERROR", 1000) != 1) {
     Serial.println(F("#E IP!"));
     delay(2000);
     Request();
@@ -212,18 +214,16 @@ void Request()
   //------------------------------------------------
   //-------------------Sensor Readings--------------
   //------------------------------------------------
-  delay (5000);
   //HX711 definitions
   scale.set_scale();
   scale.set_offset(offset);
   scale.set_scale(SCALE);
-  delay (5000);
+  delay (500);
 
   //Get weight and convert to char
   dtostrf(scale.get_units(5), 0, 2, weight);
   Serial.println(F("Weight:\t"));
   Serial.println(weight);
-  delay (1000);
   //------------------------------------------------
   //-------------------Sensor Readings--------------
   //------------------------------------------------
@@ -252,14 +252,14 @@ void Request()
   memset(postdata, '\0', 150);    // Initialize the string
   snprintf(postdata, sizeof(postdata), "HTTP_X_API=%S&ident=%S&timezone=%S&action=%S", (char*) pgm_read_word(&MARRAY[3]), (char*) pgm_read_word(&MARRAY[6]), (char*) pgm_read_word(&MARRAY[5]), (char*) pgm_read_word(&MARRAY[4]));
   snprintf(conv, sizeof(conv), "AT+HTTPDATA=%d, 20000", strlen(postdata));
-  if(sendATcommand2(conv, "DOWNLOAD", "ERROR", 5000) != 1) {
+  if(sendATcommand2(conv, "DOWNLOAD", "ERROR", 1000) != 1) {
     Serial.println(F("#E prepare sending"));
     delay(2000);
     Request();
   }
   delay(800);
   Serial.println(String(postdata));
-  if(sendATcommand2(postdata, "OK", "ERROR", 5000) != 1) {
+  if(sendATcommand2(postdata, "OK", "ERROR", 3000) != 1) {
     Serial.println(F("#E POSTING"));
     delay(2000);
     Request();
@@ -269,12 +269,12 @@ void Request()
     return;
   }*/
   delay(2000);
-  if(sendATcommand2("AT+HTTPACTION=1", "NOTHING", "ERROR", 10000) != 0) {
+  if(sendATcommand2("AT+HTTPACTION=1", "NOTHING", "ERROR", 3000) != 0) {
     Serial.println(F("#E EXECUTING POST!"));
     Request();
   }
-  delay(5000);
-  if(sendATcommand2("AT+HTTPREAD", "OK", "ERROR", 5000) !=1) {
+  delay(2000);
+  if(sendATcommand2("AT+HTTPREAD", "OK", "ERROR", 3000) !=1) {
     Serial.println(F("#E READING!"));
     delay(2000);
     Request();
@@ -285,6 +285,7 @@ void Request()
     delay(2000);
     Request();
   }
+
   done();
 }
 
@@ -301,8 +302,12 @@ void done(){
 
     //Shutdown Scale
     scale.power_down();
-    
-    
+
+    //Tell atTiny we are finished (should disconnect Arduino and following could should be unnessaccery)
+    pinMode(FINISHED, OUTPUT);
+    digitalWrite(FINISHED,LOW);
+    delay(3000);
+
     //Set Arduino Sleep mode and send to sleep
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
     sleep_enable();
