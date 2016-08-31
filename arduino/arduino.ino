@@ -66,13 +66,12 @@ Serial.begin(9600);
 
 delay(1000);
 Power_UP();
-delay(1000);
+delay(1500);
 /*if(sendATcommand2("AT+CPIN?", "+CPIN: READY", "NOTHING", 100) == 0) {
     Serial.println(F("Error SIM locked, please unlock SIM"));
   } else {
     Serial.println(F("Good, SIM is unlocked!"));
   }*/
-delay(500);
 //Serial.println(F("Find provider!"));
 //sendATcommand2("AT+COPS?", "OK", "NOTHING", 100);
 Serial.println(F("Connecting .... "));
@@ -252,14 +251,13 @@ void Request()
   memset(postdata, '\0', 150);    // Initialize the string
   snprintf(postdata, sizeof(postdata), "HTTP_X_API=%S&ident=%S&timezone=%S&action=%S", (char*) pgm_read_word(&MARRAY[3]), (char*) pgm_read_word(&MARRAY[6]), (char*) pgm_read_word(&MARRAY[5]), (char*) pgm_read_word(&MARRAY[4]));
   snprintf(conv, sizeof(conv), "AT+HTTPDATA=%d, 20000", strlen(postdata));
-  if(sendATcommand2(conv, "DOWNLOAD", "ERROR", 1000) != 1) {
+  if(sendATcommand2(conv, "DOWNLOAD", "ERROR", 3000) != 1) {
     Serial.println(F("#E prepare sending"));
     delay(2000);
     Request();
   }
-  delay(800);
   Serial.println(String(postdata));
-  if(sendATcommand2(postdata, "OK", "ERROR", 3000) != 1) {
+  if(sendATcommand2(postdata, "OK", "ERROR", 3500) != 1) {
     Serial.println(F("#E POSTING"));
     delay(2000);
     Request();
@@ -268,13 +266,12 @@ void Request()
     Serial.println("#E READING CONTENT!");
     return;
   }*/
-  delay(2000);
-  if(sendATcommand2("AT+HTTPACTION=1", "NOTHING", "ERROR", 3000) != 0) {
+  if(sendATcommand2("AT+HTTPACTION=1", "NOTHING", "ERROR", 6000) != 0) {
     Serial.println(F("#E EXECUTING POST!"));
     Request();
   }
-  delay(2000);
-  if(sendATcommand2("AT+HTTPREAD", "OK", "ERROR", 3000) !=1) {
+  delay(5000);
+  if(sendATcommand2("AT+HTTPREAD", "OK", "ERROR", 5000) !=1) {
     Serial.println(F("#E READING!"));
     delay(2000);
     Request();
