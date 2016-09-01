@@ -61,12 +61,13 @@ long offset = -145680;
 
 void setup()
 {
+delay(500);
 mySerial.begin(9600);
 Serial.begin(9600);
 
 delay(1000);
 Power_UP();
-delay(1500);
+delay(2000);
 /*if(sendATcommand2("AT+CPIN?", "+CPIN: READY", "NOTHING", 100) == 0) {
     Serial.println(F("Error SIM locked, please unlock SIM"));
   } else {
@@ -77,7 +78,7 @@ delay(1500);
 Serial.println(F("Connecting .... "));
 while( sendATcommand2("AT+CREG?", "+CREG: 0,1", "+CREG: 0,5", 1000)== 0 );
 Serial.println(F("Setup finished!"));
-delay(200);
+delay(2000);
 Request();
 }
 
@@ -108,10 +109,10 @@ void Power_UP()
     }
   }
   Serial.println(F("GSM ready!"));
-  delay(200);
+  delay(1000);
   //Print GSM Reciving Strenth
   Serial.println(F("Get access strength .."));
-  sendATcommand2("AT+CSQ", "OK", "NOTHING", 500);
+  sendATcommand2("AT+CSQ", "OK", "NOTHING", 1000);
 }
 
 
@@ -214,10 +215,11 @@ void Request()
   //-------------------Sensor Readings--------------
   //------------------------------------------------
   //HX711 definitions
+  delay(2000);
   scale.set_scale();
   scale.set_offset(offset);
   scale.set_scale(SCALE);
-  delay (500);
+  delay(2000);
 
   //Get weight and convert to char
   dtostrf(scale.get_units(5), 0, 2, weight);
@@ -251,7 +253,7 @@ void Request()
   memset(postdata, '\0', 150);    // Initialize the string
   snprintf(postdata, sizeof(postdata), "HTTP_X_API=%S&ident=%S&timezone=%S&action=%S", (char*) pgm_read_word(&MARRAY[3]), (char*) pgm_read_word(&MARRAY[6]), (char*) pgm_read_word(&MARRAY[5]), (char*) pgm_read_word(&MARRAY[4]));
   snprintf(conv, sizeof(conv), "AT+HTTPDATA=%d, 20000", strlen(postdata));
-  if(sendATcommand2(conv, "DOWNLOAD", "ERROR", 3000) != 1) {
+  if(sendATcommand2(conv, "DOWNLOAD", "ERROR", 3500) != 1) {
     Serial.println(F("#E prepare sending"));
     delay(2000);
     Request();
@@ -266,11 +268,12 @@ void Request()
     Serial.println("#E READING CONTENT!");
     return;
   }*/
+  delay(500);
   if(sendATcommand2("AT+HTTPACTION=1", "NOTHING", "ERROR", 6000) != 0) {
     Serial.println(F("#E EXECUTING POST!"));
     Request();
   }
-  delay(5000);
+  delay(3000);
   if(sendATcommand2("AT+HTTPREAD", "OK", "ERROR", 5000) !=1) {
     Serial.println(F("#E READING!"));
     delay(2000);
