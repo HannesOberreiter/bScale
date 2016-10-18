@@ -46,6 +46,7 @@ My father for help with the electronics.
 # Tests
 
 * 2016-08-30 First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and the UNO will tell the atTiny when it is finsihed. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok, Hannes.
+* 2016-10-18 Second field test, with the new code (each 2 hours) did the battery last for 50 days. The battery still has power but not enough to open the GSM connection. I will try now instead of alkaline batteries lithium batteries. They should work better with the spike of energy needed for the GSM connection
 
 # License
 GNU GPLv3
