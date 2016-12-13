@@ -9,19 +9,19 @@
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
-int const pinGate = 0; //PIN for MOSFET GATE
-int const readGate = 1; //PIN for MOSFET GATE
+int const pinGate   = 0; //PIN for MOSFET GATE
+int const readGate  = 1; //PIN for MOSFET GATE
 
-long const waitTime = 90000; //How long the mosfet is open, the arduino takes for me atm. around 40 seconds to connect & upload the data
+long const waitTime = 90000;      //How long the mosfet is open, the arduino takes for me atm. around 40 seconds to connect & upload the data
 
-volatile boolean f_wdt=true; //Flag to open MOSFET, true is open
-volatile boolean f_done=false; //Flag when open state is done, false is not done
-volatile boolean f_setup=false; //Flag when open pins and set starting time, false is not done
+volatile boolean f_wdt  = true;   //Flag to open MOSFET, true is open
+volatile boolean f_done = false;  //Flag when open state is done, false is not done
+volatile boolean f_setup= false;  //Flag when open pins and set starting time, false is not done
 
-unsigned long startMillis = 0; //holds our starting time
-unsigned long currentMillis = 0; //holds the current timestamp in loop
-volatile int count; //count the circles
-int const circles = 900; // Amount of circle till gate will be opened, Watchdog = 8 sec per circle (eg 900 circles around 7200sec / 60 = 120min
+unsigned long startMillis   = 0;  //holds our starting time
+unsigned long currentMillis = 0;  //holds the current timestamp in loop
+volatile int count;               //count the circles
+int const circles = 900;          // Amount of circle till gate will be opened, Watchdog = 8 sec per circle (eg 900 circles around 7200sec / 60 = 120min)
 
 void setup(){
   pinMode(pinGate,INPUT); // set all used port to intput to save power
@@ -73,23 +73,23 @@ void loop(){
             f_done = true; 
         } 
       }
-      
+      //If timeoutTime or Signal form Arduino is given start sleep circle and reset variables 
       if(f_done){
         //digitalWrite(pinGate, LOW);
         // set all used port to intput to save power
         pinMode(pinGate,INPUT); 
         pinMode(readGate,INPUT);
-        f_setup = false;    // reset setup flag
-        f_done = false;     // reset open circle flag
-        count = 0;      // reset sleep cycle count
-        f_wdt=false;       // reset watchdog flag
-        system_sleep(); // back to sleep little tiny
+        f_setup   =   false;    // reset setup flag
+        f_done    =   false;    // reset open circle flag
+        count     =   0;        // reset sleep cycle count
+        f_wdt     =   false;    // reset watchdog flag
+        system_sleep();         // back to sleep little tiny
       }
     } else {
       //Count has not reached Circles yet, just go back to sleep and count up
-      count++;
-      f_wdt=false;       // reset watchdog flag
-      system_sleep(); // back to sleep little tiny
+      count++;          //count up the circle
+      f_wdt=false;      // reset watchdog flag
+      system_sleep();   // back to sleep little tiny
     }
   }
 }
@@ -99,17 +99,16 @@ void loop(){
 // system wakes up when watchdog is timed out
 void system_sleep() {
 
-  cbi(ADCSRA,ADEN);                    // switch Analog to Digitalconverter OFF
-
+  cbi(ADCSRA,ADEN);                    // switch Analog to Digitalconverter OFF, to save power
   set_sleep_mode(SLEEP_MODE_PWR_DOWN); // sleep mode is set here
-  sleep_enable();
-
+  sleep_enable();                      // Activate Sleep Mode
   sleep_mode();                        // System sleeps here
   sleep_disable();                     // System continues execution here when watchdog timed out
-  sbi(ADCSRA,ADEN);                    // switch Analog to Digitalconverter ON
+  sbi(ADCSRA,ADEN);                    // switch Analog to Digitalconverter ON, to be able to use the pins again
 
 }
 
+// Watchdog sleep Mode Function
 // 0=16ms, 1=32ms,2=64ms,3=128ms,4=250ms,5=500ms
 // 6=1 sec,7=2 sec, 8=4 sec, 9= 8sec
 void setup_watchdog(int ii) {
