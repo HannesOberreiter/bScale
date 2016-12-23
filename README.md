@@ -34,6 +34,16 @@ The made for [app.btree.at](https://www.btree.at/app) a web beekeeping software.
 * [b.tree Open Source Bienenstockwaage kalibrieren ](https://www.youtube.com/watch?v=fo4yXhe6Qlo)
 * [b.tree Open Source Bienenstockwaage atTiny85 programmieren ](https://youtu.be/5xHgviWt0F4)
 
+# Images (more in img folder!)
+
+**SIM900 Power On Pin**
+
+On some SIM900 Modules are the power up pin not connected and you need to smolder the right position. Please see your specific Module description.
+![SIM900 smoldering](https://github.com/HannesOberreiter/bScale/blob/master/img/sim900_smoldering.jpg)
+
+If you use a single weight cell like me, the whole build is a little bit "shaky". To prevent to much bending on the iron bars I added this screws on all four sides with just milimeters of space.
+![Screws](https://github.com/HannesOberreiter/bScale/blob/master/img/scale_image2.jpg)
+
 # Special thanks to
 Andi_H from bienenforum.com for the idea and lots of code pieces
 
