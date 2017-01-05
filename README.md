@@ -62,6 +62,7 @@ My father for help with the electronics.
 # Updates
 
 * 2017-01-01 Added low Power low Dropout into sketch, with this we can now safety use the 5V Pin on Arduino. Because I had some problems with the VIN Pin on cheap Arduinos.
+* 2017-01-05 Removed LPLD Module because it won’t let enough AMP through to start the GSM Module. Back to VIN as Power Source.
 
 # License
 GNU GPLv3
