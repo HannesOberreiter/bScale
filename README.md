@@ -25,6 +25,9 @@ atTiny85 is a simple counter, it will send each 120 minutes a pulse to the N-Mos
 
 The UNO will tell the atTiny85 when the sending was completed. If the sending is not completed within 60 seconds, the atTiny will shutdown the UNO even it is not completed. (No connection to internet etc.)
 
+# Sensor Reading
+For the Sensor reading you need to install the DHT Library and because and bug in Version 1.3 in this library you also need to install the [Adafruid Unified Sensor Library.](https://cloud.githubusercontent.com/assets/181073/21481640/5e14ebd8-cb6a-11e6-972e-c4b4efda6ad1.png)
+
 # The webservice
 
 The made for [app.btree.at](https://www.btree.at/app) a web beekeeping software. There the data will be shown in tables and statistics. But you can change the webservice to any you want.
@@ -59,10 +62,6 @@ My father for help with the electronics.
 * 2016-08-30 First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and the UNO will tell the atTiny when it is finsihed. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok, Hannes.
 * 2016-10-18 Second field test, with the new code (each 2 hours) did the battery last for 50 days. The battery still has power but not enough to open the GSM connection. I will try now instead of alkaline batteries lithium batteries. They should work better with the spike of energy needed for the GSM connection
 
-# Updates
-
-* 2017-01-01 Added low Power low Dropout into sketch, with this we can now safety use the 5V Pin on Arduino. Because I had some problems with the VIN Pin on cheap Arduinos.
-* 2017-01-05 Removed LPLD Module because it won’t let enough AMP through to start the GSM Module. Back to VIN as Power Source.
 
 # License
 GNU GPLv3
