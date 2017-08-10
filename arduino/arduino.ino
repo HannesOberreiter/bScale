@@ -1,6 +1,7 @@
 #include <SoftwareSerial.h>
 #include <avr/sleep.h>
 #include "HX711.h"
+#include "DHT.h"
 
 //Connection PINS to GSM Shield, change if needed
 SoftwareSerial mySerial(7, 8);
@@ -58,6 +59,10 @@ HX711 scale(DIGITALOUT, CLOCK);
 //as example is my first try given, with 200kg load cell and 3.3V calibrated
 float SCALE = -19689.35;
 long offset = -145680;
+
+//DHT22
+#define DHTPIN 10     // what pin we're connected to
+#define DHTTYPE DHT22   // DHT 22 
 
 void setup()
 {
@@ -225,6 +230,39 @@ void Request()
   dtostrf(scale.get_units(5), 0, 2, weight);
   Serial.println(F("Weight:\t"));
   Serial.println(weight);
+
+  //************DHT22 SENSOR****************
+  DHT dht(DHTPIN, DHTTYPE);
+
+  dht.begin();
+
+//DHT22 Readings
+ delay(2000);
+    Serial.println("*********** DHT11 *********");
+    float t = dht.readTemperature();
+    float h = dht.readHumidity();
+  delay(2000);
+  
+    // Check if any reads failed and exit early (to try again).
+    if (isnan(h)) {
+      Serial.println("Failed to read from DHT sensor!");
+      return;
+    }
+
+    if (isnan(t)) {
+      Serial.println("Failed to read from DHT sensor!");
+      return;
+    }
+
+  
+  //Get Temperature & Humidity and convert to char
+  dtostrf(t, 5, 2, temp1);
+  Serial.println(F("Temperature:"));
+  Serial.println(temp1);
+
+  dtostrf(h, 5, 2, hum);
+  Serial.println(F("Humidity:"));
+  Serial.println(hum);
   //------------------------------------------------
   //-------------------Sensor Readings--------------
   //------------------------------------------------
