@@ -4,15 +4,14 @@ Small Arduino project for a DIY beehive scale, with SIM900 for connection to web
 
 # New improved build from Piotr from Poland
 
-Please see following markdown with description of a improved build version for the beescale:
-[Piotr BeeScale](PiotrBeeScale.md).
+***Please see following markdown with description of a improved build version for the beescale:
+[Piotr BeeScale](PiotrBeeScale.md).***
 
 Big chances are the separation of the battery unit from the UNO and SIM module and a higher voltage battery storage and solar charging in mind.
 
 Thanks to [@PiotrBeeScale](https://github.com/PiotrBeeScale)
 
-
-# Hardware
+### Hardware
 
 * UNO R3 MEGA ([AliExpress ca. € 2.70](http://de.aliexpress.com/item/high-quality-UNO-R3-MEGA328P-for-Arduino-UNO-R3-NO-USB-CABLE/32350449393.html))
 * SIMCON SIM900 Shield (Important with power up pin!) ([Ebay China € 21.99](http://www.ebay.at/itm/SIMCOM-SIM900-Quad-band-GSM-GPRS-Shield-Development-Board-for-Arduino-/231857925209?hash=item35fbcf2c59))
@@ -24,31 +23,31 @@ Thanks to [@PiotrBeeScale](https://github.com/PiotrBeeScale)
 
 and battery case, batteries, resistors, jumper wire, scale plattform, Total cost was under € 100,00.
 
-# Dirty Build:
+### Dirty Build:
 ![Fritzing](https://github.com/HannesOberreiter/bScale/blob/master/img/Sketch_Steckplatine.png?raw=true "Sketch Fritzing")
 
 
-# How does / should it work?
+### How does / should it work?
 
 UNO will collect data from sensors and send them to the shield. Uno forwards the data to SIM900, which connects to the webservice.
 atTiny85 is a simple counter, it will send each 120 minutes a pulse to the N-Mosfet gate. The Mosfet will open circuit to activate Uno.
 
 The UNO will tell the atTiny85 when the sending was completed. If the sending is not completed within 60 seconds, the atTiny will shutdown the UNO even it is not completed (No connection to internet etc.).
 
-# Sensor Reading
+### Sensor Reading
 For the Sensor reading you need to install the DHT Library and because a bug in Version 1.3 in this library you also need to install the [Adafruid Unified Sensor Library.](https://cloud.githubusercontent.com/assets/181073/21481640/5e14ebd8-cb6a-11e6-972e-c4b4efda6ad1.png)
 
-# The webservice
+### The webservice
 
 You can send the data to the beekeeping application (not free) [app.btree.at](https://www.btree.at/app). There the data will be shown in tables and statistics. But you can change the webservice to any you want.
 
-# Videos
+### Videos
 
 **German:**
 * [b.tree Open Source Bienenstockwaage kalibrieren ](https://www.youtube.com/watch?v=fo4yXhe6Qlo)
 * [b.tree Open Source Bienenstockwaage atTiny85 programmieren ](https://youtu.be/5xHgviWt0F4)
 
-# Images (more in img folder!)
+### Images (more in img folder!)
 
 **SIM900 Power On Pin**
 
@@ -58,7 +57,7 @@ On some SIM900 Modules the power up pin is not connected and you need to smolder
 If you use a single weight cell like me, the whole build is a little bit "shaky". To prevent to much bending on the iron bars I added this screws on all four sides with just milimeters of space.
 ![Screws](https://github.com/HannesOberreiter/bScale/blob/master/img/scale_image2.jpg)
 
-# Special thanks to
+### Special thanks to
 Andi_H from bienenforum.com for the idea and lots of code pieces
 
 bodge awesome HX711.h library https://github.com/bogde/HX711
@@ -67,11 +66,11 @@ Nathan Seidle SparkFun Electronics for calibrate code https://github.com/sparkfu
 
 My father for help with the electronics.
 
-# Tests
+### Tests
 
 * 2016-08-30 First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and the UNO will tell the atTiny when it is finsihed. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok, Hannes.
 * 2016-10-18 Second field test, with the new code (each 2 hours) did the battery last for 50 days. The battery still has power but not enough to open the GSM connection. I will try now instead of alkaline batteries lithium batteries. They should work better with the spike of energy needed for the GSM connection
 
 
-# License
+### License
 GNU GPLv3
