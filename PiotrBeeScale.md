@@ -1,6 +1,6 @@
 # Introduction
 
-This version is a improved build of the my original bee scale, thanks to Piotr. 
+This version is a improved build of the bee scale, thanks to Piotr. 
 
 He uses a 5V battery with solar charging in mind and separated the whole battery part from the Arduino and SIM Module for a more safety and cleaner build. 
 
