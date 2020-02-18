@@ -1,6 +1,16 @@
 # bScale for app.btree.at
 
-Small Arduino Project for a DIY beehive scale, with SIM900 commands to send to webservice. This project is made to work with the webapp **[app.btree.at](https://www.btree.at/app)**, a online database for beekeeper but you can use any webservice you want.
+Small Arduino project for a DIY beehive scale, with SIM900 for connection to webservice. This project is made to work with the webapplication **[app.btree.at](https://www.btree.at/app)**, an online database for beekeeper but you can use any webservice you want.
+
+# New improved build from Piotr from Poland
+
+Please see following markdown with description of a improved build version for the beescale:
+[Piotr BeeScale](PiotrBeeScale.md).
+
+Big chances are the separation of the battery unit from the UNO and SIM module and a higher voltage battery storage and solar charging in mind.
+
+Thanks to [@PiotrBeeScale](https://github.com/PiotrBeeScale)
+
 
 # Hardware
 
@@ -12,7 +22,7 @@ Small Arduino Project for a DIY beehive scale, with SIM900 commands to send to w
 * < 200kg platform load cell ([AliExpress ca. € 17,00](http://de.aliexpress.com/item/1PCS-X-100KG-150KG-electronic-platform-scale-load-cell-pressure-balanced-cantilever-load-weight-sensor/1743007676.html))
 * LPDP 5V ([Ebay ca. € 1,00](http://www.ebay.at/itm/LP2950CZ-5-0-LowDrop-Spannungsregler-5V-0-1A-TO92-/112028436978?hash=item1a156a49f2:g:itQAAOSwjXRXYUp4))
 
-and battery case, batteries, resistors, jumper wire, scale plattform, Total cost is under € 100,00.
+and battery case, batteries, resistors, jumper wire, scale plattform, Total cost was under € 100,00.
 
 # Dirty Build:
 ![Fritzing](https://github.com/HannesOberreiter/bScale/blob/master/img/Sketch_Steckplatine.png?raw=true "Sketch Fritzing")
@@ -20,17 +30,17 @@ and battery case, batteries, resistors, jumper wire, scale plattform, Total cost
 
 # How does / should it work?
 
-UNO will collect data from sensors and send them to the shield. Uno send SIM900 commands.
-atTiny85 is a simple counter, it will send each 120 minutes a pulse to the N-Mosfet gate. The Mosfet will open circuit to Uno and activate it.
+UNO will collect data from sensors and send them to the shield. Uno forwards the data to SIM900, which connects to the webservice.
+atTiny85 is a simple counter, it will send each 120 minutes a pulse to the N-Mosfet gate. The Mosfet will open circuit to activate Uno.
 
-The UNO will tell the atTiny85 when the sending was completed. If the sending is not completed within 60 seconds, the atTiny will shutdown the UNO even it is not completed. (No connection to internet etc.)
+The UNO will tell the atTiny85 when the sending was completed. If the sending is not completed within 60 seconds, the atTiny will shutdown the UNO even it is not completed (No connection to internet etc.).
 
 # Sensor Reading
-For the Sensor reading you need to install the DHT Library and because and bug in Version 1.3 in this library you also need to install the [Adafruid Unified Sensor Library.](https://cloud.githubusercontent.com/assets/181073/21481640/5e14ebd8-cb6a-11e6-972e-c4b4efda6ad1.png)
+For the Sensor reading you need to install the DHT Library and because a bug in Version 1.3 in this library you also need to install the [Adafruid Unified Sensor Library.](https://cloud.githubusercontent.com/assets/181073/21481640/5e14ebd8-cb6a-11e6-972e-c4b4efda6ad1.png)
 
 # The webservice
 
-The made for [app.btree.at](https://www.btree.at/app) a web beekeeping software. There the data will be shown in tables and statistics. But you can change the webservice to any you want.
+You can send the data to the beekeeping application (not free) [app.btree.at](https://www.btree.at/app). There the data will be shown in tables and statistics. But you can change the webservice to any you want.
 
 # Videos
 
@@ -42,7 +52,7 @@ The made for [app.btree.at](https://www.btree.at/app) a web beekeeping software.
 
 **SIM900 Power On Pin**
 
-On some SIM900 Modules are the power up pin not connected and you need to smolder the right position. Please see your specific Module description.
+On some SIM900 Modules the power up pin is not connected and you need to smolder the right position. Please see your specific Module description.
 ![SIM900 smoldering](https://github.com/HannesOberreiter/bScale/blob/master/img/sim900_smoldering.jpg)
 
 If you use a single weight cell like me, the whole build is a little bit "shaky". To prevent to much bending on the iron bars I added this screws on all four sides with just milimeters of space.
