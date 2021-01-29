@@ -2,7 +2,9 @@
 
 Small Arduino project for a DIY beehive scale, with SIM900 for connection to webservice. This project is made to work with the webapplication **[app.btree.at](https://www.btree.at/app)**, an online database for beekeeper but you can use any webservice you want.
 
-# New improved build from Piotr from Poland
+## New improved build from Piotr from Poland
+
+Update: 2021-01-29, Piotr did again an update. His setup and code now includes a thermal compensation for drift of weight scale due to shift of temperature, see open issue for more details [issues/7#issue-796765492](https://github.com/HannesOberreiter/bScale/issues/7#issue-796765492) and new ino file: [piotr_SHTC3.ino](arduino/piotr_SHTC3.ino).
 
 ***Please see following markdown with description of a improved build version for the beescale:
 [Piotr BeeScale](PiotrBeeScale.md).***
@@ -26,7 +28,6 @@ and battery case, batteries, resistors, jumper wire, scale plattform, Total cost
 ### Dirty Build:
 ![Fritzing](https://github.com/HannesOberreiter/bScale/blob/master/img/Sketch_Steckplatine.png?raw=true "Sketch Fritzing")
 
-
 ### How does / should it work?
 
 UNO will collect data from sensors and send them to the shield. Uno forwards the data to SIM900, which connects to the webservice.
@@ -35,6 +36,7 @@ atTiny85 is a simple counter, it will send each 120 minutes a pulse to the N-Mos
 The UNO will tell the atTiny85 when the sending was completed. If the sending is not completed within 60 seconds, the atTiny will shutdown the UNO even it is not completed (No connection to internet etc.).
 
 ### Sensor Reading
+
 For the Sensor reading you need to install the DHT Library and because a bug in Version 1.3 in this library you also need to install the [Adafruid Unified Sensor Library.](https://cloud.githubusercontent.com/assets/181073/21481640/5e14ebd8-cb6a-11e6-972e-c4b4efda6ad1.png)
 
 ### The webservice
@@ -44,6 +46,7 @@ You can send the data to the beekeeping application (not free) [app.btree.at](ht
 ### Videos
 
 **German:**
+
 * [b.tree Open Source Bienenstockwaage kalibrieren ](https://www.youtube.com/watch?v=fo4yXhe6Qlo)
 * [b.tree Open Source Bienenstockwaage atTiny85 programmieren ](https://youtu.be/5xHgviWt0F4)
 
@@ -58,11 +61,12 @@ If you use a single weight cell like me, the whole build is a little bit "shaky"
 ![Screws](https://github.com/HannesOberreiter/bScale/blob/master/img/scale_image2.jpg)
 
 ### Special thanks to
+
 Andi_H from bienenforum.com for the idea and lots of code pieces
 
-bodge awesome HX711.h library https://github.com/bogde/HX711
+bodge awesome HX711.h library <https://github.com/bogde/HX711>
 
-Nathan Seidle SparkFun Electronics for calibrate code https://github.com/sparkfun/HX711-Load-Cell-Amplifier
+Nathan Seidle SparkFun Electronics for calibrate code <https://github.com/sparkfun/HX711-Load-Cell-Amplifier>
 
 My father for help with the electronics.
 
@@ -70,7 +74,6 @@ My father for help with the electronics.
 
 * 2016-08-30 First field test the battery would handle 10 days. With each 30 minutes open the mosfet for 1 minute. Changed the code to only open the gate each 2 hours and the UNO will tell the atTiny when it is finsihed. Lets see how much of an improvment this will give us. Upload works fine, data also seems ok, Hannes.
 * 2016-10-18 Second field test, with the new code (each 2 hours) did the battery last for 50 days. The battery still has power but not enough to open the GSM connection. I will try now instead of alkaline batteries lithium batteries. They should work better with the spike of energy needed for the GSM connection
-
 
 ### License
 GNU GPLv3
