@@ -7,18 +7,18 @@
 SoftwareSerial mySerial(7, 8);
 
 //Url to btree API, change if you use your own
-const char URL[] PROGMEM = "www.btree.at";
-const char API[] PROGMEM = "/app/api/ext/scale.php?";
+const char URL[] PROGMEM = "api.btree.at";
+const char API[] PROGMEM = "/api/v1/external";
 //Resquestb.in Testing Request
 //const char URL[] PROGMEM = "requestb.in";
 //const char API[] PROGMEM = "YOU_REQUEST_BIN_URL";
 //change this constants as needed
 const char APN[] PROGMEM = "webaut"; //APN from your provider, given is HOT (Hofer)
-const char KEY[] PROGMEM= "ENTER_HERE_YOUR_API_KEY"; //API Key from your profile page www.btree.at/app
+const char KEY[] PROGMEM= "ENTER_HERE_YOUR_API_KEY"; //API Key from your profile page https://beta.btree.at/setting/profile/api
 const char ACTION[] PROGMEM = "CREATE"; //Use CREATE_DEMO if you just want to check the connection
 const char TIMEZONE[] PROGMEM = "Europe/Vienna"; //php timezoneformat, used to save with the correct current date/time
 
-//This is the name of your Hive, www.btree.at/app will create a  new if it doenst exist
+//This is the unique name of your scale, you must first create them on following page https://beta.btree.at/table/scale_data
 const char IDENT[] PROGMEM = "ScaleHouse";
 
 //Array Table for our fixed strings
@@ -271,7 +271,7 @@ void Request()
   memset(postdata, '\0', 150);    // Initialize the string
   snprintf(postdata, sizeof(postdata), "weight=%s&temp1=%s&temp2=%s&hum=%s&rain=%s", weight, temp1, temp2, hum, rain);
 
-  snprintf(conv, sizeof(conv), "AT+HTTPPARA=\"URL\", \"http://%S%S%s\"", (char*) pgm_read_word(&MARRAY[1]), (char*) pgm_read_word(&MARRAY[2]), postdata);
+  snprintf(conv, sizeof(conv), "AT+HTTPPARA=\"URL\", \"http://%S%S/%S%/%S?%S&%s\"", (char*) pgm_read_word(&MARRAY[1]), (char*) pgm_read_word(&MARRAY[2]),  (char*) pgm_read_word(&MARRAY[6]),  (char*) pgm_read_word(&MARRAY[3]), (char*) pgm_read_word(&MARRAY[4]), postdata);
   if(sendATcommand2(conv, "OK", "ERROR", 500) != 1) {
     Serial.println(F("#E URL!"));
     delay(2000);
@@ -288,9 +288,9 @@ void Request()
     Serial.println(F("#E HTTP Content-Type!"));
     Request();
   }
-  memset(postdata, '\0', 150);    // Initialize the string
-  snprintf(postdata, sizeof(postdata), "HTTP_X_API=%S&ident=%S&timezone=%S&action=%S", (char*) pgm_read_word(&MARRAY[3]), (char*) pgm_read_word(&MARRAY[6]), (char*) pgm_read_word(&MARRAY[5]), (char*) pgm_read_word(&MARRAY[4]));
-  snprintf(conv, sizeof(conv), "AT+HTTPDATA=%d, 20000", strlen(postdata));
+  //memset(postdata, '\0', 150);    // Initialize the string
+  //snprintf(postdata, sizeof(postdata), "HTTP_X_API=%S&ident=%S&timezone=%S&action=%S", (char*) pgm_read_word(&MARRAY[3]), (char*) pgm_read_word(&MARRAY[6]), (char*) pgm_read_word(&MARRAY[5]), (char*) pgm_read_word(&MARRAY[4]));
+  //snprintf(conv, sizeof(conv), "AT+HTTPDATA=%d, 20000", strlen(postdata));
   if(sendATcommand2(conv, "DOWNLOAD", "ERROR", 3500) != 1) {
     Serial.println(F("#E prepare sending"));
     delay(2000);
