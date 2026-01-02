@@ -1,6 +1,6 @@
 # bScale for app.btree.at
 
-Small Arduino project for a DIY beehive scale, with SIM900 for connection to webservice. This project is made to work with the webapplication **[app.btree.at](https://www.btree.at/app)**, an online database for beekeeper but you can use any webservice you want.
+Small Arduino project for a DIY beehive scale, with SIM900 for connection to webservice. This project is made to work with the webapplication **[btree.at](https://www.btree.at/)**, an online database for beekeeper but you can use any webservice you want.
 
 ## New improved build from Piotr from Poland
 
@@ -41,7 +41,7 @@ For the Sensor reading you need to install the DHT Library and because a bug in 
 
 ### The webservice
 
-You can send the data to the beekeeping application (not free) [app.btree.at](https://www.btree.at/app). There the data will be shown in tables and statistics. But you can change the webservice to any you want.
+You can send the data to the beekeeping application (not free) [btree.at](https://www.btree.at/). There the data will be shown in tables and statistics. But you can change the webservice to any you want.
 
 ### Videos
 
